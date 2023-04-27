@@ -8,8 +8,11 @@ VacayNextjs is a full-stack web application built with NextJs, Tailwindcss, Pris
 
 ### Stack
 
--   NextJs(File-based Routing,)
+-   NextJs
 -   Tailwind
+-	Prisma
+-	PostgreSQL
+-	Supabase File Storage
 
 ## Features
 
