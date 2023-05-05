@@ -1,15 +1,15 @@
 import '@/styles/globals.css';
-import { Raleway } from 'next/font/google';
+import { Nunito, Raleway } from 'next/font/google';
 
 // Google font import
-const raleway = Raleway({
+const nunito = Nunito({
 	subsets: ['latin'],
-	variable: '--font-raleway',
+	variable: '--font-nunito',
 });
 
 export default function App({ Component, pageProps }) {
 	return (
-		<main className={`${raleway.variable}`}>
+		<main className={`${nunito.variable}`}>
 			<Component {...pageProps} />
 		</main>
 	);
