@@ -9,7 +9,7 @@ import {
 	LogoutIcon,
 } from '@heroicons/react/24/outline';
 import ThemeToggle from './ThemeToggle';
-import { themeChange } from 'theme-change';
+
 
 const Nav = () => {
 	const menuItems = [
