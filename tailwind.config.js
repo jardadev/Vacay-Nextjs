@@ -9,4 +9,9 @@ module.exports = {
 		},
 	},
 	plugins: [require('daisyui')],
+	darkMode: ['class', '[data-theme="dark"]'],
+	daisyui: {
+		darkTheme: 'synthwave',
+		themes: ['light', 'synthwave'],
+	},
 };
