@@ -4,7 +4,7 @@ const Layout = ({ children }) => {
 	return (
 		<div className='min-h-screen flex flex-col font-raleway'>
 			<Nav />
-			{children}
+			<main className='lg:container lg:mx-auto'>{children}</main>
 		</div>
 	);
 };
