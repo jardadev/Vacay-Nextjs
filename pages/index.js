@@ -1,7 +1,7 @@
-import React from 'react';
+import Layout from '@/components/UI/Layout';
 
 const Home = () => {
-	return <div>Vacay-NextJs</div>;
+	return <Layout>VacayNextjs</Layout>;
 };
 
 export default Home;
