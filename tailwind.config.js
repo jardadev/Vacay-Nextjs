@@ -4,14 +4,14 @@ module.exports = {
 	theme: {
 		extend: {
 			fontFamily: {
-				raleway: ['var(--font-raleway)'],
+				nunito: ['var(--font-nunito)'],
 			},
 		},
 	},
 	plugins: [require('daisyui')],
 	darkMode: ['class', '[data-theme="dark"]'],
 	daisyui: {
-		darkTheme: 'synthwave',
-		themes: ['light', 'synthwave'],
+		darkTheme: 'night',
+		themes: ['light', 'night'],
 	},
 };
