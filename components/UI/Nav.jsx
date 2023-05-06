@@ -35,11 +35,6 @@ const Nav = () => {
 		},
 	];
 
-	/*     display: flex;
-    align-items: center;
-    padding: var(--navbar-padding, 0.5rem);
-    min-height: 4rem;
-    width: 100%; */
 	return (
 		<nav className='shadow-md'>
 			<div className='flex items-center min-h-16 px-4 justify-between lg:container lg:mx-auto lg:text-lg'>
