@@ -16,12 +16,11 @@ export default function ThemeToggle({}) {
 
 	return (
 		<div className='flex gap-2 h-6'>
-			<MoonIcon className='' />
+			<MoonIcon />
 			<input
 				type='checkbox'
 				className='toggle'
 				data-toggle-theme='light,dark'
-
 			/>
 			<SunIcon />
 		</div>
@@ -29,9 +28,9 @@ export default function ThemeToggle({}) {
 }
 
 function toggleTheme(evt) {
-	var themesList = evt.target.getAttribute('data-toggle-theme');
+	let themesList = evt.target.getAttribute('data-toggle-theme');
 	if (themesList) {
-		var themesArray = themesList.split(',');
+		let themesArray = themesList.split(',');
 		if (
 			document.documentElement.getAttribute('data-theme') ==
 			themesArray[0]
