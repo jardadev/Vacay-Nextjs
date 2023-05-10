@@ -14,7 +14,10 @@ const Card = ({
 	onClickFavorite = () => null,
 }) => {
 	return (
-		<Link className='max-w-md md:max-w-full' href={`/homes/${id}`}>
+		<Link
+			className='max-w-md md:max-w-full hover:opacity-80 transition'
+			href={`/homes/${id}`}
+		>
 			<div className='card bg-base-100 shadow-xl'>
 				<figure className='rounded-lg shadow overflow-hidden'>
 					<Image
@@ -22,7 +25,7 @@ const Card = ({
 						alt={title}
 						height={800}
 						width={800}
-						className='hover:opacity-80 transition'
+						className=''
 					/>
 				</figure>
 				<div className='card-body'>
