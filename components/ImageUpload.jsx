@@ -67,7 +67,7 @@ const ImageUpload = ({
 				disabled={updatingPicture}
 				onClick={handleOnClickPicture}
 				className={classNames(
-					'h-full overflow-hidden rounded-md disabled:opacity-50 disabled:cursor-not-allowed transition focus:outline-none',
+					'h-64 overflow-hidden rounded-md disabled:opacity-50 disabled:cursor-not-allowed transition focus:outline-none',
 					image?.src
 						? 'hover:opacity-50 disabled:hover:opacity-100'
 						: 'border-2 border-dashed hover:border-gray-400 focus:border-gray-400 disabled:hover:border-gray-200'
@@ -76,7 +76,7 @@ const ImageUpload = ({
 				{image?.src ? (
 					<Image
 						src={image.src}
-						alt={image?.alt ?? ''}
+						alt={image?.alt ?? 'Photo of a beautiful home'}
 						height={420}
 						width={420}
 					/>
