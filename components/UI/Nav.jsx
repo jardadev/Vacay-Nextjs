@@ -10,7 +10,6 @@ import {
 } from '@heroicons/react/24/outline';
 import ThemeToggle from './ThemeToggle';
 
-
 const Nav = () => {
 	const menuItems = [
 		{
@@ -36,7 +35,7 @@ const Nav = () => {
 	];
 
 	return (
-		<nav className='shadow-md'>
+		<nav className='bg-base-100 shadow-md fixed w-full z-50 top-0 p-2'>
 			<div className='flex items-center min-h-16 px-4 justify-between lg:container lg:mx-auto lg:text-lg'>
 				<div>
 					<Link href={'/'} className='flex items-center gap-1'>
