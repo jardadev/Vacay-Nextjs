@@ -8,7 +8,7 @@ module.exports = {
 			},
 		},
 	},
-	plugins: [require('daisyui')],
+	plugins: [require('daisyui'), require('@tailwindcss/aspect-ratio')],
 	darkMode: ['class', '[data-theme="dark"]'],
 	daisyui: {
 		darkTheme: 'night',

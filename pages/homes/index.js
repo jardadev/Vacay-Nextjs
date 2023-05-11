@@ -1,7 +1,8 @@
+import { prisma } from '@/lib/db';
 import Layout from '@/components/UI/Layout';
 import Grid from '@/components/UI/Grid';
 
-const Homes = ({ homes = [] }) => {
+const Home = ({ homes = [] }) => {
 	return (
 		<Layout>
 			<h1 className='text-xl font-medium text-gray-800'>Your listings</h1>
@@ -15,4 +16,4 @@ const Homes = ({ homes = [] }) => {
 	);
 };
 
-export default Homes;
+export default Home;

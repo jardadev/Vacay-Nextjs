@@ -9,8 +9,15 @@ import {
 	LogoutIcon,
 } from '@heroicons/react/24/outline';
 import ThemeToggle from './ThemeToggle';
+import { useState } from 'react';
 
 const Nav = () => {
+	const [showModal, setShowModal] = useState(false);
+	const openModal = () => setShowModal(true);
+	const closeModal = () => setShowModal(false);
+
+	let user = null;
+
 	const menuItems = [
 		{
 			label: 'List a new home',
@@ -89,9 +96,19 @@ const Nav = () => {
 							<div className='card-body'>
 								<ThemeToggle />
 								<div className='card-actions items-center text-center'>
-									<button className='btn btn-primary btn-outline w-full'>
-										Logout
-									</button>
+									{user ? (
+										<button className='btn btn-primary btn-outline w-full'>
+											Logout
+										</button>
+									) : (
+										<button
+											type='button'
+											onClick={openModal}
+											className='ml-4 px-4 py-1 rounded-md bg-secondary hover:bg-opacity-20 focus:outline-none focus:ring-4 focus:ring-secondary-focus focus:ring-opacity-50 text-white transition'
+										>
+											Log in
+										</button>
+									)}
 								</div>
 							</div>
 						</div>
