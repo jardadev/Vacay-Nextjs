@@ -9,37 +9,38 @@ import {
 	LogoutIcon,
 } from '@heroicons/react/24/outline';
 import ThemeToggle from './ThemeToggle';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useSession, signOut } from 'next-auth/react';
+import AuthModal from './AuthModal';
+import { toast } from 'react-hot-toast';
 
-const Nav = () => {
-	const [showModal, setShowModal] = useState(false);
-	const openModal = () => setShowModal(true);
-	const closeModal = () => setShowModal(false);
+const Nav = (props) => {
+	const { openModal } = props;
+	const router = useRouter();
+	const { data: session, status } = useSession();
 
-	let user = null;
+	const isLoadingUser = status === 'loading';
+
+	let user = session?.user;
 
 	const menuItems = [
 		{
 			label: 'List a new home',
-			icon: PlusIcon,
 			href: '/homes/create',
 		},
 		{
 			label: 'My homes',
-			icon: HomeIcon,
+
 			href: '/homes',
 		},
 		{
 			label: 'Favorites',
-			icon: HeartIcon,
+
 			href: '/favorites',
 		},
-		{
-			label: 'Logout',
-			icon: LogoutIcon,
-			onClick: null,
-		},
 	];
+
+	const Icon = (icon) => {};
 
 	return (
 		<nav className='bg-base-100 shadow-md fixed w-full z-50 top-0 p-2'>
@@ -66,16 +67,15 @@ const Nav = () => {
 							tabIndex={0}
 							className='menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52'
 						>
-							{menuItems.map(({ label, href, icon: Icon }) => (
+							{menuItems.map(({ label, href }) => (
 								<li key={label}>
-									{href && (
+									{href ? (
 										<Link href={href}>
 											<div className='flex items-center space-x-2 py-2 px-4'>
-												<Icon className='w-5 h-5 shrink-0 text-gray-500' />
 												<span>{label}</span>
 											</div>
 										</Link>
-									)}
+									) : null}
 								</li>
 							))}
 						</ul>
@@ -97,7 +97,10 @@ const Nav = () => {
 								<ThemeToggle />
 								<div className='card-actions items-center text-center'>
 									{user ? (
-										<button className='btn btn-primary btn-outline w-full'>
+										<button
+											className='btn btn-primary btn-outline w-full'
+											onClick={signOut}
+										>
 											Logout
 										</button>
 									) : (
