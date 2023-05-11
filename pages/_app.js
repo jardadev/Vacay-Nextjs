@@ -14,10 +14,13 @@ export default function App({
 	pageProps: { session, ...pageProps },
 }) {
 	return (
-		<AuthProvider session={session}>
-			<main className={`${nunito.variable}`}>
-				<Component {...pageProps} />
-			</main>
-		</AuthProvider>
+		<>
+			<AuthProvider session={session}>
+				<main className={`${nunito.variable}`}>
+					<Component {...pageProps} />
+				</main>
+			</AuthProvider>
+			<Toaster />
+		</>
 	);
 }
