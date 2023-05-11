@@ -1,7 +1,7 @@
 import Layout from '@/components/UI/Layout';
 import ListingForm from '@/components/ListingForm';
 
-const create = () => {
+const Create = () => {
 	const addHome = (data) => axios.post('/api/homes', data);
 
 	return (
@@ -29,4 +29,4 @@ const create = () => {
 	);
 };
 
-export default create;
+export default Create;
