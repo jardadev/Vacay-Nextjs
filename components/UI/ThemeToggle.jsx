@@ -28,7 +28,7 @@ export default function ThemeToggle({}) {
 }
 
 function toggleTheme(evt) {
-	let themesList = evt.target.getAttribute('data-toggle-theme');
+	const themesList = evt.target.getAttribute('data-toggle-theme');
 	if (themesList) {
 		let themesArray = themesList.split(',');
 		if (
