@@ -2,16 +2,6 @@ import Layout from '@/components/UI/Layout';
 import Grid from '@/components/UI/Grid';
 import { prisma } from '@/lib/db';
 
-export async function getServerSideProps() {
-	const homes = await prisma.home.findMany();
-
-	return {
-		props: {
-			homes: JSON.parse(JSON.stringify(homes)),
-		},
-	};
-}
-
 const Home = ({ homes = [] }) => {
 	return (
 		<Layout>
@@ -35,3 +25,13 @@ const Home = ({ homes = [] }) => {
 };
 
 export default Home;
+
+export async function getServerSideProps() {
+	const homes = await prisma.home.findMany();
+
+	return {
+		props: {
+			homes: JSON.parse(JSON.stringify(homes)),
+		},
+	};
+}

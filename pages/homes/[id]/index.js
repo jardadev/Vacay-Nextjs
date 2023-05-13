@@ -113,7 +113,6 @@ const ListedHome = (home = null) => {
 		</Layout>
 	);
 };
-
 export default ListedHome;
 
 export async function getStaticPaths() {

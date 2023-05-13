@@ -3,6 +3,20 @@ import Layout from '@/components/UI/Layout';
 import Grid from '@/components/UI/Grid';
 import { prisma } from '@/lib/db';
 
+const Favorites = ({ favoriteHomes = [] }) => {
+	return (
+		<Layout>
+			<h1 className='text-xl font-medium text-primary'>Your Favorites</h1>
+			<p className='text-secondary'>View your favorite listings!</p>
+			<div className='mt-8'>
+				<Grid homes={favoriteHomes} />
+			</div>
+		</Layout>
+	);
+};
+
+export default Favorites;
+
 export async function getServerSideProps(context) {
 	// Check if user is authenticated
 	const session = await getSession(context);
@@ -41,17 +55,3 @@ export async function getServerSideProps(context) {
 		},
 	};
 }
-
-const Favorites = ({ favoriteHomes = [] }) => {
-	return (
-		<Layout>
-			<h1 className='text-xl font-medium text-primary'>Your Favorites</h1>
-			<p className='text-secondary'>View your favorite listings!</p>
-			<div className='mt-8'>
-				<Grid homes={favoriteHomes} />
-			</div>
-		</Layout>
-	);
-};
-
-export default Favorites;
