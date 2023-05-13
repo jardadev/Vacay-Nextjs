@@ -14,7 +14,7 @@ VacayNextjs is a full-stack web application built with NextJs, TailwindCSS, Pris
 
 ## Features
 
--   Responsive / Mobile-friendly design with TailwindCSS
+-   Responsive / Mobile-first design with TailwindCSS
 -   User authentication and authorization with NextAuth
 -   Ability to create, view, update, and delete home listings
 

@@ -1,104 +1,44 @@
+import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 import { ExclamationCircleIcon } from '@heroicons/react/24/outline';
+import axios from 'axios';
 import Card from './Card';
 
-const Grid = ({
-	homes = [
-		{
-			id: 0,
-			image: '/images/100devs.png',
-			title: 'Hello World',
-			guests: 1,
-			beds: 2,
-			baths: 3,
-			price: 400,
-			favorite: false,
-		},
-		{
-			id: 0,
-			image: '/images/nav.jpeg',
-			title: 'Hello World',
-			guests: 1,
-			beds: 2,
-			baths: 3,
-			price: 400,
-			favorite: false,
-		},
-		{
-			id: 0,
-			image: '/images/100devs.png',
-			title: 'Hello World',
-			guests: 1,
-			beds: 2,
-			baths: 3,
-			price: 400,
-			favorite: false,
-		},
-		{
-			id: 0,
-			image: '/images/100devs.png',
-			title: 'Hello World',
-			guests: 1,
-			beds: 2,
-			baths: 3,
-			price: 400,
-			favorite: false,
-		},
-		{
-			id: 0,
-			image: '/images/100devs.png',
-			title: 'Hello World',
-			guests: 1,
-			beds: 2,
-			baths: 3,
-			price: 400,
-			favorite: false,
-		},
-		{
-			id: 0,
-			image: '/images/100devs.png',
-			title: 'Hello World',
-			guests: 1,
-			beds: 2,
-			baths: 3,
-			price: 400,
-			favorite: false,
-		},
-		{
-			id: 0,
-			image: '/images/100devs.png',
-			title: 'Hello World',
-			guests: 1,
-			beds: 2,
-			baths: 3,
-			price: 400,
-			favorite: false,
-		},
-		{
-			id: 0,
-			image: '/images/100devs.png',
-			title: 'Hello World',
-			guests: 1,
-			beds: 2,
-			baths: 3,
-			price: 400,
-			favorite: false,
-		},
-		{
-			id: 0,
-			image: '/images/100devs.png',
-			title: 'Hello World',
-			guests: 1,
-			beds: 2,
-			baths: 3,
-			price: 400,
-			favorite: false,
-		},
-	],
-}) => {
+const Grid = ({ homes = [] }) => {
+	const [favorites, setFavorites] = useState([]);
+	const { data: session, status } = useSession();
 	const isEmpty = homes.length === 0;
 
+	// Gets User Favorites
+	useEffect(() => {
+		if (session) {
+			(async () => {
+				const favoriteList = (await axios.get('/api/users/favorites'))
+					.data;
+				setFavorites(favoriteList.map((favorite) => favorite.id));
+			})();
+		}
+	}, [session]);
+
+	const toggleFavorite = async (id) => {
+		if (favorites.includes(id)) {
+			setFavorites((prev) => prev.filter((prev) => prev !== id));
+			let result = await axios
+				.delete('/api/users/favorites', {
+					deleteId: id,
+				})
+				.catch((error) => console.log(error.response));
+		} else {
+			setFavorites((prev) => [...prev, id]);
+			let result = await axios
+				.post(`/api/users/favorites`, {
+					addId: id,
+				})
+				.catch((error) => console.log(error.response));
+		}
+	};
+
 	return isEmpty ? (
-		// FIXME: Replace warning styles
 		<p className='text-error-content bg-warning px-4 rounded-md py-2 max-w-max inline-flex items-center space-x-1'>
 			<ExclamationCircleIcon className='shrink-0 w-5 h-5 mt-px' />
 			<span className='text-xs lg:text-sm'>
@@ -111,9 +51,8 @@ const Grid = ({
 				<Card
 					key={home.id}
 					{...home}
-					// onClickFavorite={toggleFavorite}
-					// favorite={!!favorites.includes(home.id)}
-					favorite={true}
+					onClickFavorite={toggleFavorite}
+					favorite={!!favorites.includes(home.id)}
 				/>
 			))}
 		</div>

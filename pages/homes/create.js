@@ -1,5 +1,7 @@
 import Layout from '@/components/UI/Layout';
 import ListingForm from '@/components/ListingForm';
+import { getSession } from 'next-auth/react';
+import axios from 'axios';
 
 const Create = () => {
 	const addHome = (data) => axios.post('/api/homes', data);
@@ -7,22 +9,20 @@ const Create = () => {
 	return (
 		<Layout>
 			<div>
-				<section>
-					<header className='leading-8'>
-						<h2 className='font-bold text-primary'>
-							Top rated places to stay:
-						</h2>
-						<p className='text-gray-500 text-xs lg:text-sm'>
-							Explore some of the best homes in the world!
-						</p>
-					</header>
-				</section>
-				<section className='py-6 max-w-md lg:max-w-lg'>
-					<ListingForm
-						buttonText='Add home'
-						redirectPath='/'
-						onSubmit={addHome}
-					/>
+				<section className='max-w-screen-sm mx-auto'>
+					<h1 className='text-xl font-medium text-primary'>
+						List your home
+					</h1>
+					<p className='text-secondary'>
+						Fill out the form below to list a new home.
+					</p>
+					<div className='mt-8'>
+						<ListingForm
+							buttonText='Add home'
+							redirectPath='/'
+							onSubmit={addHome}
+						/>
+					</div>
 				</section>
 			</div>
 		</Layout>
@@ -30,3 +30,21 @@ const Create = () => {
 };
 
 export default Create;
+
+export async function getServerSideProps(context) {
+	// Check if user is authenticated
+	const session = await getSession(context);
+
+	// User NOT authenticated
+	if (!session) {
+		return {
+			redirect: {
+				destination: '/',
+				permanent: false,
+			},
+		};
+	}
+	return {
+		props: {},
+	};
+}

@@ -15,7 +15,7 @@ const Card = ({
 }) => {
 	return (
 		<Link
-			className='max-w-md md:max-w-full hover:opacity-80 transition'
+			className='block max-w-fit hover:opacity-80 transition'
 			href={`/homes/${id}`}
 		>
 			<div className='card bg-base-100 shadow-xl'>
@@ -23,9 +23,9 @@ const Card = ({
 					<Image
 						src={image}
 						alt={title}
-						height={800}
-						width={800}
-						className=''
+						height={300}
+						width={300}
+						className='object-cover h-48 w-96'
 					/>
 				</figure>
 				<div className='card-body'>
