@@ -1,0 +1,151 @@
+// pages/homes/[id].js
+
+import Image from 'next/image';
+import Layout from '@/components/UI/Layout';
+import { prisma } from '@/lib/db';
+import { useSession } from 'next-auth/react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { toast } from 'react-hot-toast';
+import axios from 'axios';
+
+const ListedHome = (home = null) => {
+	const { data: session } = useSession();
+	const [isOwner, setIsOwner] = useState(false);
+
+	useEffect(() => {
+		(async () => {
+			if (session?.user) {
+				try {
+					const owner = await axios.get(
+						`/api/homes/${home.id}/owner`
+					);
+					setIsOwner(owner?.data.id === session.user.id);
+				} catch (e) {
+					setIsOwner(false);
+				}
+			}
+		})();
+	}, [session?.user, home.id]);
+
+	// Delete Current Home Logic
+	const router = useRouter();
+	const [deleting, setDeleting] = useState(false);
+	const deleteHome = async () => {
+		let toastId;
+		try {
+			toastId = toast.loading('Deleting...');
+			setDeleting(true);
+			// Delete home from DB
+			await axios.delete(`/api/homes/${home.id}`);
+			// Redirect user
+			toast.success('Successfully deleted', { id: toastId });
+			router.push('/homes');
+		} catch (e) {
+			console.log(e);
+			toast.error('Unable to delete home', { id: toastId });
+			setDeleting(false);
+		}
+	};
+
+	// Fetches current Home's owner and compares that id to the current authenticated user's id and updates the isOwner variable accordingly.
+
+	return (
+		<Layout>
+			<div className='max-w-screen-lg mx-auto'>
+				<div className='flex flex-col sm:flex-row sm:justify-between sm:space-x-4 space-y-4'>
+					<div>
+						<h1 className='text-2xl font-semibold truncate text-primary'>
+							{home?.title ?? ''}
+						</h1>
+						<ol className='inline-flex items-center space-x-1 text-base-content'>
+							<li>
+								<span>{home?.guests ?? 0} guests</span>
+								<span aria-hidden='true'> · </span>
+							</li>
+							<li>
+								<span>{home?.beds ?? 0} beds</span>
+								<span aria-hidden='true'> · </span>
+							</li>
+							<li>
+								<span>{home?.baths ?? 0} baths</span>
+							</li>
+						</ol>
+					</div>
+				</div>
+
+				{isOwner ? (
+					<div className='flex items-center space-x-2'>
+						<button
+							type='button'
+							disabled={deleting}
+							onClick={() =>
+								router.push(`/homes/${home.id}/edit`)
+							}
+							className='border btn btn-secondary btn-outline btn-sm hover:bg-opacity-20 focus:outline-none focus:ring-4 focus:ring-error-content focus:ring-opacity-50 transition disabled:text-base-300 disabled:bg-transparent disabled:opacity-50 disabled:cursor-not-allowed'
+						>
+							Edit
+						</button>
+
+						<button
+							type='button'
+							disabled={deleting}
+							onClick={deleteHome}
+							className='border btn btn-error btn-outline btn-sm hover:bg-opacity-20 focus:outline-none focus:ring-4 focus:ring-error-content focus:ring-opacity-50 transition disabled:text-base-300 disabled:bg-transparent disabled:opacity-50 disabled:cursor-not-allowed'
+						>
+							{deleting ? 'Deleting...' : 'Delete'}
+						</button>
+					</div>
+				) : null}
+				<div className='mt-6 relative aspect-w-16 aspect-h-9 bg-gray-200 rounded-lg shadow-md overflow-hidden'>
+					{home?.image && (
+						<Image
+							src={home.image}
+							alt={home.title}
+							layout='fill'
+							objectFit='cover'
+						/>
+					)}
+				</div>
+
+				<p className='mt-8 text-lg'>{home?.description ?? ''}</p>
+			</div>
+		</Layout>
+	);
+};
+
+export default ListedHome;
+
+export async function getStaticPaths() {
+	// Get all the homes IDs from the database
+	const homes = await prisma.home.findMany({
+		select: { id: true }, // retrieves only the id's of each record. Using 'select' Prisma directive.
+	});
+
+	return {
+		paths: homes.map((home) => ({
+			params: { id: home.id },
+		})),
+		fallback: false, // returns 404 error page when trying to access an invalid record.
+	};
+}
+
+export async function getStaticProps({ params }) {
+	// Get the current home from the database
+	const home = await prisma.home.findUnique({
+		where: { id: params.id },
+	});
+
+	if (home) {
+		return {
+			props: JSON.parse(JSON.stringify(home)),
+		};
+	}
+
+	return {
+		redirect: {
+			destination: '/',
+			permanent: false,
+		},
+	};
+}
