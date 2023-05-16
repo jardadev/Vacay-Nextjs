@@ -27,12 +27,10 @@ const Nav = (props) => {
 		},
 		{
 			label: 'My homes',
-
 			href: '/homes',
 		},
 		{
 			label: 'Favorites',
-
 			href: '/favorites',
 		},
 	];
@@ -64,13 +62,11 @@ const Nav = (props) => {
 						>
 							{menuItems.map(({ label, href }) => (
 								<li key={label}>
-									{href ? (
-										<Link href={href}>
-											<div className='flex items-center space-x-2 py-2 px-4'>
-												<span>{label}</span>
-											</div>
-										</Link>
-									) : null}
+									<Link href={href}>
+										<div className='flex items-center space-x-2 py-2 px-4'>
+											<span>{label}</span>
+										</div>
+									</Link>
 								</li>
 							))}
 						</ul>
@@ -84,14 +80,16 @@ const Nav = (props) => {
 								<UserIcon className='w-10 rounded-full animate-pulse text-primary' />
 							) : !user ? (
 								<UserIcon className='w-10 rounded-full text-primary' />
-							) : (
+							) : user.image ? (
 								<Image
 									src={user?.image}
-									alt={user?.name || 'Avatar'}
+									alt={user?.name || 'Signed in User'}
 									width={80}
 									height={80}
 									className='rounded-full w-10'
 								/>
+							) : (
+								<UserIcon className='w-10 rounded-full text-primary' />
 							)}
 						</label>
 						<div
