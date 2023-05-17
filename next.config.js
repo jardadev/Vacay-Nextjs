@@ -4,7 +4,7 @@ const nextConfig = {
 	images: {
 		domains: [
 			'ghhpyyqfblzhmyzjlrhs.supabase.co', // development supabase image bucket
-			ykojjcrjusqoavfzxxnj.supabase.co, // production supabase image bucket
+			'ykojjcrjusqoavfzxxnj.supabase.co', // production supabase image bucket
 			'lh3.googleusercontent.com',
 		],
 	},
