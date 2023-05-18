@@ -21,3 +21,7 @@ VacayNextjs is a full-stack web application built with NextJs, TailwindCSS, Pris
 ## Upcoming Features
 
 -   Search functionality to find homes by location, price, and other criteria
+-   View total favorites on a home.
+-   Allow mulitple images for home listing.
+-   Full address field for homes.
+-   Google Maps integration
